@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "baseUrl": "../src",
+    "target": "es6",
+    "module": "commonjs",
+    "sourceMap": true,
+    "allowJs": false,
+    "lib": ["esnext", "dom"],
+    "jsx": "react",
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "noUnusedLocals": true,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "esModuleInterop": true
+  }
+}

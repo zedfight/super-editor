@@ -1,0 +1,48 @@
+{
+  "name": "super-editor",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "start": "node ./start.js",
+    "icon": "node ./icon.js",
+    "output": "rm -rf dist && tsc -p config/tsconfig.build.json"
+  },
+  "author": "vocoWone",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.7.0",
+    "@babel/plugin-proposal-decorators": "^7.7.0",
+    "@babel/plugin-transform-typescript": "^7.7.2",
+    "@types/node": "12.6.1",
+    "@types/react": "^16.9.11",
+    "@types/react-dom": "^16.9.8",
+    "antd": "^3.25.2",
+    "css-loader": "^3.5.3",
+    "file-loader": "^6.0.0",
+    "html-webpack-plugin": "3.2.0",
+    "iconfont-component": "0.0.12",
+    "less-loader": "^6.1.0",
+    "postcss-loader": "^3.0.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.11.0",
+    "style-loader": "^1.2.1",
+    "ts-loader": "6.2.0",
+    "ts-node": "8.3.0",
+    "tslib": "1.10.0",
+    "tslint": "5.18.0",
+    "tslint-react": "4.0.0",
+    "typescript": "^3.3.3",
+    "webpack": "4.28.3",
+    "webpack-dev-server": "3.1.14"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "emotion": "^10.0.27",
+    "slate": "^0.58.1",
+    "slate-history": "^0.58.3",
+    "slate-react": "^0.58.2"
+  }
+}
