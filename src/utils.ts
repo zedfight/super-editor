@@ -5,12 +5,16 @@ export function serialize(value: Node[]): string {
     return value.map((n: Node) => Node.string(n)).join("\n");
 }
 
-export function deserialize(str: string): Node[] {
-    return str.split("\n").map((line: string) => {
-        return {
-            children: [{text: line}],
-        };
-    });
+export function deserialize(str?: string): Node[] {
+    if (str) {
+        str.split("\n").map((line: string) => {
+            return {
+                children: [{text: line}],
+            };
+        });
+    } else {
+        return [{type: "paragraph", children: [{text: ""}]}];
+    }
 }
 
 export function file2Base64(file: File | Blob) {

@@ -1,12 +1,12 @@
-import React, {useMemo, useCallback, useRef} from "react";
-import {createEditor, Node} from "slate";
-import {Slate, Editable, withReact, RenderElementProps, RenderLeafProps} from "slate-react";
-import {CodeElement, ImageElement, DefaultElement, TextAlignElement, LeafElement} from "./Element";
-import {withHistory} from "slate-history";
+import React, { useMemo, useCallback, useRef } from "react";
+import { createEditor, Node } from "slate";
+import { Slate, Editable, withReact, RenderElementProps, RenderLeafProps } from "slate-react";
+import { CodeElement, ImageElement, DefaultElement, TextAlignElement, LeafElement } from "./Element";
+import { withHistory } from "slate-history";
 import ToolBar from "./ToolBar";
-import Icon, {IconClass} from "./Icon";
-import {serialize, file2Base64, withImages, createUploadFormData} from "./utils";
-import axios, {Method, AxiosResponse} from "axios";
+import Icon, { IconClass } from "./Icon";
+import { serialize, deserialize, file2Base64, withImages, createUploadFormData } from "./utils";
+import axios, { Method, AxiosResponse } from "axios";
 import "./index.less";
 
 interface Props<T> {
@@ -34,7 +34,7 @@ interface UploadConfig<T = any> {
 }
 
 function Index<T>(props: Props<T>) {
-    const {value = [{type: "paragraph", children: [{text: ""}]}], placeholder, onChange, titlePlaceholder, uploadConfig, onTitleChange, title} = props;
+    const { value = [{ type: "paragraph", children: [{ text: "" }] }], placeholder, onChange, titlePlaceholder, uploadConfig, onTitleChange, title } = props;
 
     const uploadRef = useRef<HTMLInputElement>(null);
     const editor = useMemo(() => withHistory(withImages(withReact(createEditor()))), []);
@@ -217,5 +217,9 @@ function Index<T>(props: Props<T>) {
         </div>
     );
 }
+
+Index.serialize = serialize
+
+Index.deserialize = deserialize
 
 export default Index;

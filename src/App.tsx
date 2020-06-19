@@ -1,6 +1,7 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import App from "./index";
+import Abb from "../dist/index";
+import "../dist/index.css";
 
 const uploadConfig = {
     action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
@@ -8,8 +9,8 @@ const uploadConfig = {
 };
 
 const Index = () => {
-    const [value, setValue] = useState([{type: "paragraph", children: [{text: "1234213"}]}]);
-    return <App value={value} onChange={setValue as any} uploadConfig={uploadConfig} />;
+    const [value, setValue] = useState([{ type: "paragraph", children: [{ text: "1234213" }] }]);
+    return <Abb value={value} onChange={setValue as any} uploadConfig={uploadConfig} />;
 };
 
 const rootElement: HTMLDivElement = document.createElement("div");

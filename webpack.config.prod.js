@@ -1,3 +1,5 @@
+const webpack = require("webpack");
+
 const path = require("path");
 const autoprefixer = require("autoprefixer");
 const MiniCSSExtractPlugin = require("mini-css-extract-plugin");
@@ -10,117 +12,118 @@ function resolve(relativePath) {
     return path.resolve(__dirname, `./${relativePath}`);
 }
 
-const webpackProdConfig = {
-    entry: {
-        index: `${resolve("src")}/index.tsx`,
-        "index.min": `${resolve("src")}/index.tsx`,
-    },
-    output: {
-        path: resolve("dist"),
-        filename: "js/[name].js",
-        libraryTarget: "umd",
-        libraryExport: "default",
-    },
-    externals: {
-        react: {
-            root: "React",
-            commonjs2: "react",
-            commonjs: "react",
-            amd: "react",
+const webpackConfig = [
+    {
+        mode: "production",
+        entry: {
+            index: `${resolve("src")}/index.tsx`,
+            "index.min": `${resolve("src")}/index.tsx`,
         },
-        "react-dom": {
-            root: "ReactDOM",
-            commonjs2: "react-dom",
-            commonjs: "react-dom",
-            amd: "react-dom",
+        output: {
+            path: resolve("dist"),
+            filename: "[name].js",
+            // library: "SUPER_LIBRARY",
+            libraryTarget: "commonjs2",
+            // libraryExport: "default",
         },
-    },
-    resolve: {
-        extensions: [".ts", ".tsx", ".js", ".jsx", ".less"],
-        modules: [resolve("src"), "node_modules"],
-    },
-    optimization: {
-        minimize: true,
-        namedModules: true,
-        runtimeChunk: "single",
-        splitChunks: {
-            automaticNameDelimiter: "-",
-            maxAsyncRequests: 12,
+        resolve: {
+            extensions: [".ts", ".tsx", ".js", ".jsx", ".less"],
+            modules: [resolve("src"), "node_modules"],
         },
-        minimizer: [
-            new TerserPlugin({include: /index\.min\.js$/}),
-            new OptimizeCSSAssetsPlugin({
-                cssProcessorOptions: {
-                    map: {
-                        inline: false,
+        externals: {
+            react: {
+                commonjs: "react",
+                commonjs2: "react",
+                amd: "react",
+                root: "React",
+            },
+            "react-dom": {
+                commonjs: "react-dom",
+                commonjs2: "react-dom",
+                amd: "react-dom",
+                root: "ReactDOM",
+            },
+            "react-dom/server": {
+                commonjs: "react-dom/server",
+                commonjs2: "react-dom/server",
+                amd: "react-dom/server",
+                root: "ReactDOMServer",
+            },
+        },
+        bail: true,
+        optimization: {
+            minimizer: [
+                new TerserPlugin({include: /index\.min\.js$/}),
+                new OptimizeCSSAssetsPlugin({
+                    cssProcessorOptions: {
+                        map: {
+                            inline: false,
+                        },
                     },
-                },
-            }),
-        ],
-    },
-    performance: {
-        maxEntrypointSize: 720000 /* 实际大小700kb */,
-        maxAssetSize: 1000000,
-    },
-    loaders: [
-        {
-            test: /\.(ts|tsx)$/,
-            loader: "ts-loader",
-            include: [resolve("src")],
-            options: {},
+                }),
+            ],
         },
-        {
-            test: /\.(css|less)$/,
-            use: [
-                MiniCSSExtractPlugin.loader,
+        performance: {
+            maxEntrypointSize: 720000,
+            maxAssetSize: 1000000,
+        },
+        module: {
+            rules: [
                 {
-                    loader: "css-loader",
-                    options: {
-                        sourceMap: true,
-                        importLoaders: 2,
-                    },
+                    test: /\.(ts|tsx)$/,
+                    loader: "ts-loader",
+                    include: [resolve("src")],
                 },
                 {
-                    loader: "postcss-loader",
-                    options: {
-                        sourceMap: true,
-                        plugins: () => [autoprefixer],
-                    },
+                    test: /\.(css|less)$/,
+                    use: [
+                        MiniCSSExtractPlugin.loader,
+                        {
+                            loader: "css-loader",
+                            options: {
+                                sourceMap: true,
+                                importLoaders: 2,
+                            },
+                        },
+                        {
+                            loader: "postcss-loader",
+                            options: {
+                                sourceMap: true,
+                                plugins: () => [autoprefixer],
+                            },
+                        },
+                        {
+                            loader: "less-loader",
+                            options: {
+                                javascriptEnabled: true,
+                                sourceMap: true,
+                            },
+                        },
+                    ],
                 },
                 {
-                    loader: "less-loader",
-                    options: {
-                        javascriptEnabled: true,
-                        sourceMap: true,
-                    },
+                    test: /\.(woff|woff2|eot|ttf|otf|svg)$/,
+                    loader: "file-loader",
                 },
             ],
         },
-        {
-            test: /\.(woff|woff2|eot|ttf|otf|svg)$/,
-            loader: "file-loader",
-            options: {
-                name: "font/[name].[hash:8].[ext]",
-            },
-        },
-    ],
-    plugins: [
-        new MiniCSSExtractPlugin({
-            filename: "css/[name].[contenthash:8].css",
-        }),
-        new ForkTSCheckerPlugin({
-            tsconfig: resolve("tsconfig.json"),
-            tslint: resolve("tslint.json"),
-            useTypescriptIncrementalApi: false,
-            workers: ForkTSCheckerPlugin.TWO_CPUS_FREE,
-        }),
-        new StylelintPlugin({
-            configFile: resolve("stylelint.json"),
-            context: resolve("src"),
-            files: ["**/*.less"],
-            syntax: "less",
-        }),
-    ],
-};
+        plugins: [
+            new MiniCSSExtractPlugin(),
+            new ForkTSCheckerPlugin({
+                tsconfig: resolve("tsconfig.json"),
+                tslint: resolve("tslint.json"),
+                useTypescriptIncrementalApi: false,
+                workers: ForkTSCheckerPlugin.TWO_CPUS_FREE,
+            }),
+            new StylelintPlugin({
+                configFile: resolve("stylelint.json"),
+                context: resolve("src"),
+                files: ["**/*.less"],
+                syntax: "less",
+            }),
+            new webpack.ProgressPlugin(),
+        ],
+    },
+];
 
-module.exports = webpackProdConfig;
+module.exports = webpackConfig;
