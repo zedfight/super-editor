@@ -25,4 +25,8 @@ interface UploadConfig<T = any> {
     data?: object;
 }
 declare function Index<T>(props: Props<T>): JSX.Element;
+declare namespace Index {
+    var serialize: typeof import("./utils").serialize;
+    var deserialize: typeof import("./utils").deserialize;
+}
 export default Index;

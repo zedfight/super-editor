@@ -22,9 +22,10 @@ const webpackConfig = [
         output: {
             path: resolve("dist"),
             filename: "[name].js",
-            // library: "SUPER_LIBRARY",
-            libraryTarget: "commonjs2",
-            // libraryExport: "default",
+            library: "SUPER_EDITOR",
+            libraryTarget: "umd",
+            libraryExport: "default",
+            globalObject: "this",
         },
         resolve: {
             extensions: [".ts", ".tsx", ".js", ".jsx", ".less"],
@@ -50,7 +51,6 @@ const webpackConfig = [
                 root: "ReactDOMServer",
             },
         },
-        bail: true,
         optimization: {
             minimizer: [
                 new TerserPlugin({include: /index\.min\.js$/}),

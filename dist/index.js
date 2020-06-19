@@ -1,5 +1,14 @@
-module.exports =
-/******/ (function(modules) { // webpackBootstrap
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory(require("react"), require("react-dom"));
+	else if(typeof define === 'function' && define.amd)
+		define(["react", "react-dom"], factory);
+	else if(typeof exports === 'object')
+		exports["SUPER_EDITOR"] = factory(require("react"), require("react-dom"));
+	else
+		root["SUPER_EDITOR"] = factory(root["React"], root["ReactDOM"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE__0__, __WEBPACK_EXTERNAL_MODULE__19__) {
+return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -89,7 +98,7 @@ module.exports =
 /* 0 */
 /***/ (function(module, exports) {
 
-module.exports = require("react");
+module.exports = __WEBPACK_EXTERNAL_MODULE__0__;
 
 /***/ }),
 /* 1 */
@@ -3499,7 +3508,7 @@ function direction(value) {
 /* 19 */
 /***/ (function(module, exports) {
 
-module.exports = require("react-dom");
+module.exports = __WEBPACK_EXTERNAL_MODULE__19__;
 
 /***/ }),
 /* 20 */
@@ -15629,8 +15638,11 @@ function Index(props) {
                 external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement(Editable, { className: "super-editor-table", onKeyDown: handleKeyDown, renderLeaf: renderLeaf, renderElement: renderElement }),
                 external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("span", { className: "super-editor-placeholder " + (!serialize(value) ? "visible" : "") }, placeholder)))));
 }
+Index.serialize = serialize;
+Index.deserialize = deserialize;
 /* harmony default export */ var src_0 = __webpack_exports__["default"] = (Index);
 
 
 /***/ })
-/******/ ]);
+/******/ ])["default"];
+});

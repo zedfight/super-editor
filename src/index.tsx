@@ -218,8 +218,8 @@ function Index<T>(props: Props<T>) {
     );
 }
 
-Index.serialize = serialize
+Index.serialize = serialize;
 
-Index.deserialize = deserialize
+Index.deserialize = deserialize;
 
 export default Index;
