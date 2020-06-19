@@ -1,7 +1,7 @@
 {
   "name": "super-editor",
-  "version": "0.0.1",
-  "description": "",
+  "version": "0.0.2",
+  "description": "Custom editor based on React and Slate",
   "main": "dist/js/main.js",
   "module": "dist/js/main.js",
   "scripts": {
