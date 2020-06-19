@@ -1,11 +1,22 @@
 {
-  "extends": "./tsconfig.dev",
   "compilerOptions": {
-    "target": "esnext",
-    "outDir": "../dist",
+    "baseUrl": "../src",
+    "module": "esnext",
+    "target": "es5",
+    "moduleResolution": "node",
     "sourceMap": true,
-    "declaration": true,
+    "jsx": "react",
+    "lib": ["dom", "es2017"],
+    "strict": true,
+    "allowSyntheticDefaultImports": true,
+    "importHelpers": true,
+    "noImplicitAny": true,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "suppressImplicitAnyIndexErrors": true,
     "skipLibCheck": true
   },
-  "include": ["../src"]
+  "include": ["../src"],
+  "exclude": ["node_modules"]
 }
