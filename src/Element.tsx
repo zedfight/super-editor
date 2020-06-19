@@ -1,10 +1,10 @@
 import React from "react";
-import { useSelected, useFocused, RenderElementProps, RenderLeafProps } from "slate-react";
-import { css } from "emotion";
+import {useSelected, useFocused, RenderElementProps, RenderLeafProps} from "slate-react";
+import {css} from "emotion";
 
 export const DefaultElement = (props: RenderElementProps) => <div {...props.attributes}>{props.children}</div>;
 
-export const ImageElement = ({ attributes, children, element }: RenderElementProps) => {
+export const ImageElement = ({attributes, children, element}: RenderElementProps) => {
     const selected = useSelected();
     const focused = useFocused();
     return (
@@ -23,7 +23,7 @@ export const ImageElement = ({ attributes, children, element }: RenderElementPro
 };
 
 export const TextAlignElement = (props: RenderElementProps) => (
-    <div {...props.attributes} style={{ textAlign: props?.element?.type as "left" | "right" | "center" }}>
+    <div {...props.attributes} style={{textAlign: props?.element?.type as "left" | "right" | "center"}}>
         {props.children}
     </div>
 );

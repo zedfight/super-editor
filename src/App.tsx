@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import ReactDOM from "react-dom";
 import App from "./index";
 
@@ -7,7 +7,12 @@ const uploadConfig = {
     // transformURL: (file, response) => response?.url
 };
 
+const Index = () => {
+    const [value, setValue] = useState([{type: "paragraph", children: [{text: "1234213"}]}]);
+    return <App value={value} onChange={setValue as any} uploadConfig={uploadConfig} />;
+};
+
 const rootElement: HTMLDivElement = document.createElement("div");
 rootElement.id = "framework-app-root";
 document.body.appendChild(rootElement);
-ReactDOM.render(<App uploadConfig={uploadConfig} />, rootElement);
+ReactDOM.render(<Index />, rootElement);

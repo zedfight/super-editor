@@ -1,54 +1,48 @@
-import React, { useMemo, useState, useCallback, useRef } from "react";
-import { createEditor, Node } from "slate";
-import { Slate, Editable, withReact, RenderElementProps, RenderLeafProps } from "slate-react";
-import { CodeElement, ImageElement, DefaultElement, TextAlignElement, LeafElement } from "./Element";
-import { withHistory } from "slate-history";
+import React, {useMemo, useCallback, useRef} from "react";
+import {createEditor, Node} from "slate";
+import {Slate, Editable, withReact, RenderElementProps, RenderLeafProps} from "slate-react";
+import {CodeElement, ImageElement, DefaultElement, TextAlignElement, LeafElement} from "./Element";
+import {withHistory} from "slate-history";
 import ToolBar from "./ToolBar";
-import Icon, { IconClass } from "./Icon";
-import { serialize, file2Base64, withImages, createUploadFormData } from "./utils";
-import axios, { Method, AxiosResponse } from "axios";
+import Icon, {IconClass} from "./Icon";
+import {serialize, file2Base64, withImages, createUploadFormData} from "./utils";
+import axios, {Method, AxiosResponse} from "axios";
 import "./index.less";
 
-interface Props {
+interface Props<T> {
     defaultValue?: string;
-    value?: string;
-    onChange?: (value: string) => void;
+    value?: Node[];
+    onChange?: (value: Node[]) => void;
     placeholder?: string;
     title?: string;
+    onTitleChange?: (value: string) => void;
     titlePlaceholder?: string;
-    toolbar?: any;
-    uploadConfig: UploadConfig;
+    toolbar?: string[];
+    uploadConfig?: UploadConfig<T>;
 }
 
-interface UploadConfig {
+interface UploadConfig<T = any> {
     name?: string;
     accept?: string;
     action: string;
     method?: Method;
     beforeUpload?: (file: File) => boolean | Promise<boolean>;
-    transformURL?: (file: File, uploadResponse: any) => string | Promise<string>;
+    transformURL?: (file: File, uploadResponse: T) => string | Promise<string>;
     withCredentials?: boolean;
     headers?: object;
     data?: object;
 }
 
-export default (props: Props) => {
-    const { placeholder, titlePlaceholder, uploadConfig } = props;
-    const [value, setValue] = useState<Node[]>([
-        {
-            type: "paragraph",
-            children: [{ text: "A line of text in a paragraph." }, { text: "A line of text in a paragraph2." }, { text: "A line of text in a paragraph3." }, { text: "A line of text in a paragraph4." }, { text: "A line of text in a paragraph5." }],
-        },
-    ]);
+function Index<T>(props: Props<T>) {
+    const {value = [{type: "paragraph", children: [{text: ""}]}], placeholder, onChange, titlePlaceholder, uploadConfig, onTitleChange, title} = props;
 
-    const [title, setTitle] = useState("");
     const uploadRef = useRef<HTMLInputElement>(null);
     const editor = useMemo(() => withHistory(withImages(withReact(createEditor()))), []);
     const toolbar = useMemo(() => new ToolBar(editor), []);
 
-    const handleChange = (newValue: Node[]) => setValue(newValue);
+    const handleChange = (newValue: Node[]) => onChange?.(newValue);
 
-    const changeTitle = (event: React.ChangeEvent<HTMLInputElement>) => setTitle(event.target.value);
+    const changeTitle = (event: React.ChangeEvent<HTMLInputElement>) => onTitleChange?.(event.target.value);
 
     const uploadChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files![0];
@@ -209,7 +203,7 @@ export default (props: Props) => {
                     <Icon onMouseDown={clickTextRight} type={IconClass.TEXT_RIGHT} />
                     <em />
                     <Icon type={IconClass.IMAGE} onMouseDown={clickImage}>
-                        <input ref={uploadRef} type="file" className="super-editor-upload" onChange={uploadChange} />
+                        <input ref={uploadRef} type="file" className="super-editor-upload" onChange={uploadChange} accept="image/*" />
                     </Icon>
                 </div>
                 <div className={`super-editor-title`}>
@@ -222,4 +216,6 @@ export default (props: Props) => {
             </Slate>
         </div>
     );
-};
+}
+
+export default Index;

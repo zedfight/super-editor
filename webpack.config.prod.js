@@ -11,11 +11,29 @@ function resolve(relativePath) {
 }
 
 const webpackProdConfig = {
-    entry: `${resolve("src")}/index.tsx`,
+    entry: {
+        index: `${resolve("src")}/index.tsx`,
+        "index.min": `${resolve("src")}/index.tsx`,
+    },
     output: {
         path: resolve("dist"),
         filename: "js/[name].js",
-        publicPath: "/",
+        libraryTarget: "umd",
+        libraryExport: "default",
+    },
+    externals: {
+        react: {
+            root: "React",
+            commonjs2: "react",
+            commonjs: "react",
+            amd: "react",
+        },
+        "react-dom": {
+            root: "ReactDOM",
+            commonjs2: "react-dom",
+            commonjs: "react-dom",
+            amd: "react-dom",
+        },
     },
     resolve: {
         extensions: [".ts", ".tsx", ".js", ".jsx", ".less"],
@@ -30,7 +48,7 @@ const webpackProdConfig = {
             maxAsyncRequests: 12,
         },
         minimizer: [
-            new TerserPlugin(),
+            new TerserPlugin({include: /index\.min\.js$/}),
             new OptimizeCSSAssetsPlugin({
                 cssProcessorOptions: {
                     map: {

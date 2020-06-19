@@ -1,7 +1,6 @@
 import React, {AllHTMLAttributes} from "react";
 import "./icon.css";
-
-export enum IconClass {
+export declare enum IconClass {
     UNDO = "super-editor-undo",
     REDO = "super-editor-redo",
     LINK = "super-editor-link",
@@ -20,35 +19,14 @@ export enum IconClass {
     TEXT = "super-editor-text",
     DELETE = "super-editor-delete",
 }
-
 interface Props extends AllHTMLAttributes<HTMLElement> {
     type: IconClass;
     symbol: boolean;
 }
-
 export default class Component extends React.PureComponent<Props> {
-    static defaultProps = {
-        symbol: false,
+    static defaultProps: {
+        symbol: boolean;
     };
-
-    render() {
-        const {type, symbol, className = "", ...restProps} = this.props;
-        return symbol ? (
-            <svg
-                className={`super-editor ${className}`}
-                style={{
-                    width: "1em",
-                    height: "1em",
-                    verticalAlign: "-0.15em",
-                    fill: "currentColor",
-                    overflow: "hidden",
-                }}
-                aria-hidden="true"
-            >
-                <use xlinkHref={`#${type}`} />
-            </svg>
-        ) : (
-            <i className={`super-editor ${type} ${className}`} {...restProps} />
-        );
-    }
+    render(): JSX.Element;
 }
+export {};
