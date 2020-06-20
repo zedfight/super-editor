@@ -1,4 +1,5 @@
-import {Node, Editor, Element} from "slate";
+import escapeHtml from "escape-html";
+import {Node, Editor, Element, Text} from "slate";
 import {ReactEditor} from "slate-react";
 
 export function serialize(value: Node[]): string {
@@ -11,6 +12,26 @@ export function deserialize(str: string): Node[] {
             children: [{text: line}],
         };
     });
+}
+
+export function escapeHTML(node: Node | Node[]): string {
+    const children = "test";
+    if (node instanceof Array) {
+        return node.map((_: Node) => escapeHTML(_)).join("");
+    } else {
+        switch (node.type) {
+            case "paragraph":
+                return `<p>${(node.children as Node[]).map((_: Node) => `<span>${_.text}</span>`).join("")}</p>`;
+            case "quote":
+                return `<blockquote><p>${(node.children as Node[]).map((_: Node) => _.text)}</p></blockquote>`;
+            case "image":
+                return `<img href="${node.url as string}"/>`;
+            case "link":
+                return `<a href="${escapeHtml(node.url as string)}">${children}</a>`;
+            default:
+                return children;
+        }
+    }
 }
 
 export function file2Base64(file: File | Blob) {

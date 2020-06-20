@@ -1,6 +1,6 @@
 {
   "name": "super-editor",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "Custom editor based on React and Slate",
   "index": "dist/index.js",
   "module": "dist/index.js",
@@ -14,6 +14,7 @@
   "author": "vocoWone",
   "license": "ISC",
   "devDependencies": {
+    "@types/escape-html": "^1.0.0",
     "@types/node": "12.6.1",
     "@types/react": "^16.9.11",
     "@types/react-dom": "^16.9.8",
@@ -23,6 +24,7 @@
     "chalk": "^4.1.0",
     "css-loader": "3.0.0",
     "emotion": "^10.0.27",
+    "escape-html": "^1.0.3",
     "file-loader": "4.0.0",
     "fork-ts-checker-webpack-plugin": "1.3.7",
     "fs-extra": "^9.0.1",

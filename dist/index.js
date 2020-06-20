@@ -91,7 +91,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 50);
+/******/ 	return __webpack_require__(__webpack_require__.s = 51);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -2626,7 +2626,7 @@ module.exports = isObject;
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var freeGlobal = __webpack_require__(24);
+var freeGlobal = __webpack_require__(25);
 
 /** Detect free variable `self`. */
 var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
@@ -2981,7 +2981,7 @@ module.exports = function isCancel(value) {
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(2);
-var normalizeHeaderName = __webpack_require__(38);
+var normalizeHeaderName = __webpack_require__(39);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -3086,11 +3086,11 @@ module.exports = defaults;
 
 
 var utils = __webpack_require__(2);
-var settle = __webpack_require__(39);
+var settle = __webpack_require__(40);
 var buildURL = __webpack_require__(10);
-var buildFullPath = __webpack_require__(41);
-var parseHeaders = __webpack_require__(44);
-var isURLSameOrigin = __webpack_require__(45);
+var buildFullPath = __webpack_require__(42);
+var parseHeaders = __webpack_require__(45);
+var isURLSameOrigin = __webpack_require__(46);
 var createError = __webpack_require__(14);
 
 module.exports = function xhrAdapter(config) {
@@ -3188,7 +3188,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(46);
+      var cookies = __webpack_require__(47);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(fullPath)) && config.xsrfCookieName ?
@@ -3272,7 +3272,7 @@ module.exports = function xhrAdapter(config) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(40);
+var enhanceError = __webpack_require__(41);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -3400,7 +3400,7 @@ module.exports = Cancel;
 /* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var debounce = __webpack_require__(22),
+var debounce = __webpack_require__(23),
     isObject = __webpack_require__(4);
 
 /** Error message constants. */
@@ -3576,21 +3576,106 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__19__;
 
 }(this));
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(31)(module), __webpack_require__(6)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(32)(module), __webpack_require__(6)))
 
 /***/ }),
 /* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(33);
+"use strict";
+/*!
+ * escape-html
+ * Copyright(c) 2012-2013 TJ Holowaychuk
+ * Copyright(c) 2015 Andreas Lubbe
+ * Copyright(c) 2015 Tiancheng "Timothy" Gu
+ * MIT Licensed
+ */
+
+
+
+/**
+ * Module variables.
+ * @private
+ */
+
+var matchHtmlRegExp = /["'&<>]/;
+
+/**
+ * Module exports.
+ * @public
+ */
+
+module.exports = escapeHtml;
+
+/**
+ * Escape special characters in the given string of html.
+ *
+ * @param  {string} string The string to escape for inserting into HTML
+ * @return {string}
+ * @public
+ */
+
+function escapeHtml(string) {
+  var str = '' + string;
+  var match = matchHtmlRegExp.exec(str);
+
+  if (!match) {
+    return str;
+  }
+
+  var escape;
+  var html = '';
+  var index = 0;
+  var lastIndex = 0;
+
+  for (index = match.index; index < str.length; index++) {
+    switch (str.charCodeAt(index)) {
+      case 34: // "
+        escape = '&quot;';
+        break;
+      case 38: // &
+        escape = '&amp;';
+        break;
+      case 39: // '
+        escape = '&#39;';
+        break;
+      case 60: // <
+        escape = '&lt;';
+        break;
+      case 62: // >
+        escape = '&gt;';
+        break;
+      default:
+        continue;
+    }
+
+    if (lastIndex !== index) {
+      html += str.substring(lastIndex, index);
+    }
+
+    lastIndex = index + 1;
+    html += escape;
+  }
+
+  return lastIndex !== index
+    ? html + str.substring(lastIndex, index)
+    : html;
+}
+
 
 /***/ }),
 /* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = __webpack_require__(34);
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
 var isObject = __webpack_require__(4),
-    now = __webpack_require__(23),
-    toNumber = __webpack_require__(25);
+    now = __webpack_require__(24),
+    toNumber = __webpack_require__(26);
 
 /** Error message constants. */
 var FUNC_ERROR_TEXT = 'Expected a function';
@@ -3782,7 +3867,7 @@ module.exports = debounce;
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var root = __webpack_require__(5);
@@ -3811,7 +3896,7 @@ module.exports = now;
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/** Detect free variable `global` from Node.js. */
@@ -3822,11 +3907,11 @@ module.exports = freeGlobal;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(6)))
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(4),
-    isSymbol = __webpack_require__(26);
+    isSymbol = __webpack_require__(27);
 
 /** Used as references for various `Number` constants. */
 var NAN = 0 / 0;
@@ -3894,11 +3979,11 @@ module.exports = toNumber;
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGetTag = __webpack_require__(27),
-    isObjectLike = __webpack_require__(30);
+var baseGetTag = __webpack_require__(28),
+    isObjectLike = __webpack_require__(31);
 
 /** `Object#toString` result references. */
 var symbolTag = '[object Symbol]';
@@ -3929,12 +4014,12 @@ module.exports = isSymbol;
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Symbol = __webpack_require__(7),
-    getRawTag = __webpack_require__(28),
-    objectToString = __webpack_require__(29);
+    getRawTag = __webpack_require__(29),
+    objectToString = __webpack_require__(30);
 
 /** `Object#toString` result references. */
 var nullTag = '[object Null]',
@@ -3963,7 +4048,7 @@ module.exports = baseGetTag;
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Symbol = __webpack_require__(7);
@@ -4015,7 +4100,7 @@ module.exports = getRawTag;
 
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports) {
 
 /** Used for built-in method references. */
@@ -4043,7 +4128,7 @@ module.exports = objectToString;
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports) {
 
 /**
@@ -4078,7 +4163,7 @@ module.exports = isObjectLike;
 
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -4106,13 +4191,13 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4120,7 +4205,7 @@ module.exports = function(module) {
 
 var utils = __webpack_require__(2);
 var bind = __webpack_require__(9);
-var Axios = __webpack_require__(34);
+var Axios = __webpack_require__(35);
 var mergeConfig = __webpack_require__(15);
 var defaults = __webpack_require__(12);
 
@@ -4156,14 +4241,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(16);
-axios.CancelToken = __webpack_require__(47);
+axios.CancelToken = __webpack_require__(48);
 axios.isCancel = __webpack_require__(11);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(48);
+axios.spread = __webpack_require__(49);
 
 module.exports = axios;
 
@@ -4172,7 +4257,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4180,8 +4265,8 @@ module.exports.default = axios;
 
 var utils = __webpack_require__(2);
 var buildURL = __webpack_require__(10);
-var InterceptorManager = __webpack_require__(35);
-var dispatchRequest = __webpack_require__(36);
+var InterceptorManager = __webpack_require__(36);
+var dispatchRequest = __webpack_require__(37);
 var mergeConfig = __webpack_require__(15);
 
 /**
@@ -4273,7 +4358,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4332,14 +4417,14 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(2);
-var transformData = __webpack_require__(37);
+var transformData = __webpack_require__(38);
 var isCancel = __webpack_require__(11);
 var defaults = __webpack_require__(12);
 
@@ -4418,7 +4503,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4445,7 +4530,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4464,7 +4549,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4496,7 +4581,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4545,14 +4630,14 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var isAbsoluteURL = __webpack_require__(42);
-var combineURLs = __webpack_require__(43);
+var isAbsoluteURL = __webpack_require__(43);
+var combineURLs = __webpack_require__(44);
 
 /**
  * Creates a new URL by combining the baseURL with the requestedURL,
@@ -4572,7 +4657,7 @@ module.exports = function buildFullPath(baseURL, requestedURL) {
 
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4593,7 +4678,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4614,7 +4699,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4674,7 +4759,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4749,7 +4834,7 @@ module.exports = (
 
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4809,7 +4894,7 @@ module.exports = (
 
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4873,7 +4958,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4907,13 +4992,13 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15305,7 +15390,6 @@ var ToolBar_ToolBar = /** @class */ (function () {
             lineThrough: null,
             type: null,
             underline: null,
-            textAlign: null,
         }, { match: function (_) { return Text.isText(_); }, split: true });
     };
     ToolBar.prototype.changeTextLeft = function () {
@@ -15314,11 +15398,11 @@ var ToolBar_ToolBar = /** @class */ (function () {
     };
     ToolBar.prototype.changeTextCenter = function () {
         var _this = this;
-        Transforms.setNodes(this.editor, { type: "center", value: "center" }, { match: function (_) { return Editor.isBlock(_this.editor, _); } });
+        Transforms.setNodes(this.editor, { type: "center" }, { match: function (_) { return Editor.isBlock(_this.editor, _); } });
     };
     ToolBar.prototype.changeTextRight = function () {
         var _this = this;
-        Transforms.setNodes(this.editor, { type: "right", value: "right" }, { match: function (_) { return Editor.isBlock(_this.editor, _); } });
+        Transforms.setNodes(this.editor, { type: "right" }, { match: function (_) { return Editor.isBlock(_this.editor, _); } });
     };
     ToolBar.prototype.delete = function () {
         Transforms.setPoint(this.editor, { path: [0, 0], offset: 0 }, {});
@@ -15341,7 +15425,7 @@ var ToolBar_ToolBar = /** @class */ (function () {
 /* harmony default export */ var src_ToolBar = (ToolBar_ToolBar);
 
 // EXTERNAL MODULE: ./src/Icon/icon.css
-var icon = __webpack_require__(32);
+var icon = __webpack_require__(33);
 
 // CONCATENATED MODULE: ./src/Icon/index.tsx
 
@@ -15390,7 +15474,12 @@ var Icon_Component = /** @class */ (function (_super) {
 }(external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.PureComponent));
 /* harmony default export */ var Icon = (Icon_Component);
 
+// EXTERNAL MODULE: ./node_modules/escape-html/index.js
+var escape_html = __webpack_require__(21);
+var escape_html_default = /*#__PURE__*/__webpack_require__.n(escape_html);
+
 // CONCATENATED MODULE: ./src/utils.ts
+
 
 
 function serialize(value) {
@@ -15402,6 +15491,26 @@ function deserialize(str) {
             children: [{ text: line }],
         };
     });
+}
+function escapeHTML(node) {
+    var children = "test";
+    if (node instanceof Array) {
+        return node.map(function (_) { return escapeHTML(_); }).join("");
+    }
+    else {
+        switch (node.type) {
+            case "paragraph":
+                return "<p>" + node.children.map(function (_) { return "<span>" + _.text + "</span>"; }).join("") + "</p>";
+            case "quote":
+                return "<blockquote><p>" + node.children.map(function (_) { return _.text; }) + "</p></blockquote>";
+            case "image":
+                return "<img href=\"" + node.url + "\"/>";
+            case "link":
+                return "<a href=\"" + escape_html_default()(node.url) + "\">" + children + "</a>";
+            default:
+                return children;
+        }
+    }
 }
 function file2Base64(file) {
     return new Promise(function (resolve, reject) {
@@ -15439,13 +15548,18 @@ var createUploadFormData = function (file, name, data) {
 };
 
 // EXTERNAL MODULE: ./node_modules/axios/index.js
-var axios = __webpack_require__(21);
+var axios = __webpack_require__(22);
 var axios_default = /*#__PURE__*/__webpack_require__.n(axios);
 
 // EXTERNAL MODULE: ./src/index.less
-var src = __webpack_require__(49);
+var src = __webpack_require__(50);
 
 // CONCATENATED MODULE: ./src/index.tsx
+/* concated harmony reexport escapeHTML */__webpack_require__.d(__webpack_exports__, "escapeHTML", function() { return escapeHTML; });
+/* concated harmony reexport deserialize */__webpack_require__.d(__webpack_exports__, "deserialize", function() { return deserialize; });
+/* concated harmony reexport serialize */__webpack_require__.d(__webpack_exports__, "serialize", function() { return serialize; });
+/* concated harmony reexport createUploadFormData */__webpack_require__.d(__webpack_exports__, "createUploadFormData", function() { return createUploadFormData; });
+/* concated harmony reexport file2Base64 */__webpack_require__.d(__webpack_exports__, "file2Base64", function() { return file2Base64; });
 
 
 
@@ -15616,7 +15730,6 @@ function Index(props) {
         external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement(Slate, { editor: editor, value: value, onChange: handleChange },
             external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("div", { className: "super-editor-toolbar" },
                 external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement(Icon, { onMouseDown: clickFormat, type: IconClass.FORMAT }),
-                external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement(Icon, { onMouseDown: clickDelete, type: IconClass.DELETE }),
                 external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("em", null),
                 external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement(Icon, { onMouseDown: clickUndo, type: IconClass.UNDO }),
                 external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement(Icon, { onMouseDown: clickRedo, type: IconClass.REDO }),
@@ -15638,8 +15751,7 @@ function Index(props) {
                 external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement(Editable, { className: "super-editor-table", onKeyDown: handleKeyDown, renderLeaf: renderLeaf, renderElement: renderElement }),
                 external_commonjs_react_commonjs2_react_amd_react_root_React_default.a.createElement("span", { className: "super-editor-placeholder " + (!serialize(value) ? "visible" : "") }, placeholder)))));
 }
-Index.serialize = serialize;
-Index.deserialize = deserialize;
+
 /* harmony default export */ var src_0 = __webpack_exports__["default"] = (Index);
 
 

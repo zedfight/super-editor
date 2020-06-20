@@ -105,7 +105,6 @@ export default class ToolBar {
                 lineThrough: null,
                 type: null,
                 underline: null,
-                textAlign: null,
             },
             {match: (_: Node) => Text.isText(_), split: true}
         );
@@ -116,11 +115,11 @@ export default class ToolBar {
     }
 
     changeTextCenter() {
-        Transforms.setNodes(this.editor, {type: "center", value: "center"}, {match: (_: Node) => Editor.isBlock(this.editor, _)});
+        Transforms.setNodes(this.editor, {type: "center"}, {match: (_: Node) => Editor.isBlock(this.editor, _)});
     }
 
     changeTextRight() {
-        Transforms.setNodes(this.editor, {type: "right", value: "right"}, {match: (_: Node) => Editor.isBlock(this.editor, _)});
+        Transforms.setNodes(this.editor, {type: "right"}, {match: (_: Node) => Editor.isBlock(this.editor, _)});
     }
 
     delete() {

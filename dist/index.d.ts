@@ -1,8 +1,9 @@
 /// <reference types="react" />
 import { Node } from "slate";
+import { serialize, deserialize, file2Base64, escapeHTML, createUploadFormData } from "./utils";
 import { Method } from "axios";
 import "./index.less";
-interface Props<T> {
+export interface Props<T> {
     defaultValue?: string;
     value?: Node[];
     onChange?: (value: Node[]) => void;
@@ -13,9 +14,8 @@ interface Props<T> {
     toolbar?: string[];
     uploadConfig?: UploadConfig<T>;
 }
-interface UploadConfig<T = any> {
+export interface UploadConfig<T = any> {
     name?: string;
-    accept?: string;
     action: string;
     method?: Method;
     beforeUpload?: (file: File) => boolean | Promise<boolean>;
@@ -25,8 +25,5 @@ interface UploadConfig<T = any> {
     data?: object;
 }
 declare function Index<T>(props: Props<T>): JSX.Element;
-declare namespace Index {
-    var serialize: typeof import("./utils").serialize;
-    var deserialize: typeof import("./utils").deserialize;
-}
+export { escapeHTML, deserialize, serialize, createUploadFormData, file2Base64 };
 export default Index;

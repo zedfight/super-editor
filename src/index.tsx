@@ -5,11 +5,11 @@ import { CodeElement, ImageElement, DefaultElement, TextAlignElement, LeafElemen
 import { withHistory } from "slate-history";
 import ToolBar from "./ToolBar";
 import Icon, { IconClass } from "./Icon";
-import { serialize, deserialize, file2Base64, withImages, createUploadFormData } from "./utils";
+import { serialize, deserialize, file2Base64, withImages, escapeHTML, createUploadFormData } from "./utils";
 import axios, { Method, AxiosResponse } from "axios";
 import "./index.less";
 
-interface Props<T> {
+export interface Props<T> {
     defaultValue?: string;
     value?: Node[];
     onChange?: (value: Node[]) => void;
@@ -21,9 +21,8 @@ interface Props<T> {
     uploadConfig?: UploadConfig<T>;
 }
 
-interface UploadConfig<T = any> {
+export interface UploadConfig<T = any> {
     name?: string;
-    accept?: string;
     action: string;
     method?: Method;
     beforeUpload?: (file: File) => boolean | Promise<boolean>;
@@ -58,7 +57,7 @@ function Index<T>(props: Props<T>) {
                     url: uploadConfig.action,
                     data: formData,
                     headers: uploadConfig.headers,
-                }).then((_: AxiosResponse) => _.data);
+                }).then((_: AxiosResponse<T>) => _.data);
 
                 if (uploadConfig.transformURL) {
                     const url = await uploadConfig.transformURL(file, result);
@@ -188,7 +187,6 @@ function Index<T>(props: Props<T>) {
             <Slate editor={editor} value={value} onChange={handleChange}>
                 <div className={`super-editor-toolbar`}>
                     <Icon onMouseDown={clickFormat} type={IconClass.FORMAT} />
-                    <Icon onMouseDown={clickDelete} type={IconClass.DELETE} />
                     <em />
                     <Icon onMouseDown={clickUndo} type={IconClass.UNDO} />
                     <Icon onMouseDown={clickRedo} type={IconClass.REDO} />
@@ -218,8 +216,6 @@ function Index<T>(props: Props<T>) {
     );
 }
 
-Index.serialize = serialize;
-
-Index.deserialize = deserialize;
+export { escapeHTML, deserialize, serialize, createUploadFormData, file2Base64 };
 
 export default Index;
