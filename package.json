@@ -20,7 +20,7 @@
     "@types/react-dom": "^16.9.8",
     "antd": "^3.25.2",
     "autoprefixer": "^9.8.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "chalk": "^4.1.0",
     "css-loader": "3.0.0",
     "emotion": "^10.0.27",
